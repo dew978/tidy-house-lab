@@ -54,3 +54,16 @@ body.rinsing #target span{max-width:100%;white-space:normal}
 /* Side panels at 60% of their previous size. */
 .checklist{transform:scale(.6);transform-origin:top left}
 .tool-dock{transform:scale(.6);transform-origin:right center}
+
+/* Fullscreen toggle sits beside the pause button. */
+#fullscreen-button svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#fullscreen-button .fs-exit,#fullscreen-button[aria-pressed=true] .fs-enter{display:none}
+#fullscreen-button[aria-pressed=true] .fs-exit{display:inline}
+/* The held-item card takes the checklist's place; the checklist hides while holding. */
+#held{top:170px;bottom:auto;left:24px}
+@media(max-width:1050px){#held{top:165px}}
+@media(max-height:720px){#held{top:150px}}
+@media(max-width:700px){#held{left:16px;top:155px}}
+@media(max-height:500px) and (min-width:701px){#held{top:140px}}
+@media(min-width:701px) and (max-height:720px){#held{top:174px}}
+@media(max-height:500px){#held{top:132px}}

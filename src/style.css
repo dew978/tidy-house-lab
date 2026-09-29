@@ -48,3 +48,9 @@ body.rinsing #target span{max-width:100%;white-space:normal}
 @media(max-height:720px){#toolbelt button{gap:3px;padding:5px}#toolbelt button svg{width:33px;height:30px}#toolbelt .label{font-size:16px}.tool-dock,#toolbelt button{width:98px}.touch-actions{right:133px}.checklist{padding:12px 16px}.checklist p{margin:6px 0}}
 @media(max-width:700px){.checklist{width:242px;padding:12px}.checklist p{font-size:16px;gap:7px;margin:7px 0}.list-title{font-size:16px}.tool-dock,#toolbelt button{width:90px}#toolbelt .label{font-size:16px}#toolbelt button svg{height:32px;width:35px}.touch-actions{right:115px}#hazard-marker{max-width:215px;padding:9px 12px}#hazard-marker strong{font-size:18px}#hazard-marker span{font-size:13px}}
 @media(max-height:500px){.tool-dock{top:64px;bottom:16px}#toolbelt{gap:4px}#toolbelt button{height:54px;gap:1px}#toolbelt button svg{height:26px;width:28px}#toolbelt .label{font-size:14px}#toolbelt .key{font-size:12px}.wheel-tip{display:none}.checklist{top:132px}.checklist p{font-size:15px;margin:3px 0}.list-title{font-size:16px;margin-bottom:5px}}
+
+/* Touch separation button sits above 집기·사용 so the other touch buttons keep their place. */
+#touch-peel{position:absolute;left:0;bottom:calc(100% + 10px);font-size:16px}
+/* Side panels at 60% of their previous size. */
+.checklist{transform:scale(.6);transform-origin:top left}
+.tool-dock{transform:scale(.6);transform-origin:right center}

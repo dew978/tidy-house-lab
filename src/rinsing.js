@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 export const RINSE_DURATION=4.8;
+// Where the container hangs, where the stream lands, the tap mouth and the camera focus.
+export const RINSE_SPOTS={kitchen:{vessel:[4.0,1.25,-4.25],impact:[4.2,.953,-4.35],tap:[4.21,1.4,-4.45],look:[4.15,1.18,-4.35]},bathroom:{vessel:[2.88,1.15,2.68],impact:[3.08,.962,2.58],tap:[3.08,1.29,2.5],look:[3.03,1.19,2.58]}};
 const smooth=(a,b,t)=>THREE.MathUtils.smoothstep(t,a,b);
 export function rinsePhase(time){
  const pour=smooth(.35,.65,time)*(1-smooth(2.25,2.6,time));
@@ -38,12 +40,12 @@ export function makeRinseAnimation(scene){
  const root=new THREE.Group();root.visible=false;root.userData.mapHide=true;scene.add(root);
  const vessel=new THREE.Group();root.add(vessel);
  const contents=makeFlow(root,'#c99a42'),water=makeFlow(root,'#c9efff');
- const pivot=new THREE.Vector3(),mouth=new THREE.Vector3(),impact=new THREE.Vector3(4.2,.953,-4.35),tap=new THREE.Vector3(4.21,1.4,-4.45),outlet=new THREE.Vector3();
+ const pivot=new THREE.Vector3(),mouth=new THREE.Vector3(),impact=new THREE.Vector3(),tap=new THREE.Vector3(),base=new THREE.Vector3(),outlet=new THREE.Vector3();
  function cloneVessel(source){const copy=source.isMesh?new THREE.Mesh(source.geometry,source.material):new THREE.Group();copy.position.copy(source.position);copy.quaternion.copy(source.quaternion);copy.scale.copy(source.scale);copy.visible=source.visible;copy.userData={part:source.userData.part,noBatch:true};for(const child of source.children)copy.add(cloneVessel(child));return copy;}
  let elapsed=0,item=null,visual=null,liquidParts=[],caps=[];
  function clear(){root.visible=false;vessel.clear();contents.hide();water.hide();item=null;visual=null;liquidParts=[];caps=[];}
- return {get active(){return !!item;},get progress(){return Math.min(1,elapsed/RINSE_DURATION);},get phase(){return elapsed<2.65?'내용물 비우기':'물로 헹구기';},start(next){
-  clear();item=next;elapsed=0;visual=cloneVessel(next.object);visual.position.set(0,0,0);visual.rotation.set(0,0,0);visual.visible=true;
+ return {get active(){return !!item;},get progress(){return Math.min(1,elapsed/RINSE_DURATION);},get phase(){return elapsed<2.65?'내용물 비우기':'물로 헹구기';},start(next,spot='kitchen'){
+  clear();item=next;elapsed=0;const at=RINSE_SPOTS[spot]||RINSE_SPOTS.kitchen;base.set(...at.vessel);impact.set(...at.impact);tap.set(...at.tap);visual=cloneVessel(next.object);visual.position.set(0,0,0);visual.rotation.set(0,0,0);visual.visible=true;
   visual.traverse(o=>{o.userData={...o.userData,noBatch:true};if(o.userData.part==='contents')liquidParts.push({mesh:o,y:o.position.y,scale:o.scale.y});if(o.userData.part==='cap'||o.userData.part==='pump'){caps.push(o);o.visible=false;}if(o.material?.polygonOffset)o.visible=false;});
   // Rotate around the middle of the container, keeping the mouth attached.
   const height=next.bin==='pet'?.35:next.bin==='carton'?.32:next.bin==='can'?.21:.27;
@@ -52,7 +54,7 @@ export function makeRinseAnimation(scene){
   contents.material.color.set(next.bin==='carton'?'#fff8de':next.bin==='pet'?'#c78c2e':next.bin==='can'?'#b27736':'#b7d9bf');root.visible=true;
  },update(dt){
   if(!item)return null;elapsed+=dt;const phase=rinsePhase(elapsed);
-  vessel.position.set(4.0,1.25,-4.25);vessel.rotation.set(0,.15,-phase.tilt*2.05);vessel.updateMatrixWorld(true);outlet.copy(mouth).applyMatrix4(vessel.matrixWorld);
+  vessel.position.copy(base);vessel.rotation.set(0,.15,-phase.tilt*2.05);vessel.updateMatrixWorld(true);outlet.copy(mouth).applyMatrix4(vessel.matrixWorld);
   for(const p of liquidParts){p.mesh.scale.y=p.scale*phase.remaining;p.mesh.visible=phase.remaining>.01;p.mesh.position.y=p.y-(1-phase.remaining)*.025;}
   contents.update(outlet,impact,phase.pour,elapsed);water.update(tap,phase.rinse>.01?outlet:impact,phase.rinse,elapsed);
   // Rinsing water drains from the tilted opening in the final rinse phase.

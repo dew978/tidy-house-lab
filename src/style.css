@@ -28,8 +28,9 @@
 .checklist p{font-size:18px;line-height:1.5;margin:10px 0;gap:10px}
 .checklist p:before{font-size:22px;flex-shrink:0}
 .tool-dock{width:110px;top:86px;bottom:48px;transform:none;display:flex;flex-direction:column;justify-content:center}
-#toolbelt{gap:8px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-#toolbelt button{width:110px;height:clamp(62px,calc((100dvh - 195px)/6),88px);flex-shrink:0;gap:5px;padding:8px 5px}
+#toolbelt{gap:8px;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none}
+#toolbelt::-webkit-scrollbar{display:none}
+#toolbelt button{width:110px;height:clamp(62px,calc((100dvh - 225px)/6),88px);flex-shrink:0;gap:5px;padding:8px 5px}
 #toolbelt button svg{width:40px;height:38px;flex-shrink:0}
 #toolbelt .label{font-size:18px;line-height:1.2}
 #toolbelt .key{font-size:14px}

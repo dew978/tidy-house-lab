@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {sortingResult,canStand,movePlayer} from './src/rules.js';
+import {ITEM_POOL} from './src/variety.js';
 const pet={id:'pet1',bin:'pet',prep:true,peel:true,prepared:false,labelRemoved:false};
 assert.equal(sortingResult(pet,'pet').ok,false,'Unrinsed containers must be rejected');
 pet.prepared=true;assert.equal(sortingResult(pet,'pet').ok,false,'Labels must be separated');
@@ -14,4 +15,14 @@ assert.equal(canStand(1.5,-3,walls),false);assert.equal(canStand(1.5,-1.6,walls)
 let p={x:0,z:-3};movePlayer(p,5,0,walls);assert.ok(p.x<1.2,'Large steps must not tunnel through a wall');
 p={x:0,z:-1.6};movePlayer(p,3,0,walls);assert.ok(p.x>2.9,'The kitchen doorway must be passable');
 p={x:0,z:0};movePlayer(p,0,100,[]);assert.ok(p.z<=6.71,'Exterior bounds must hold');
-console.log('12 meaningful sorting, doorway and collision assertions passed.');
+// Tricky items from the per-run pool.
+const pool=id=>({...ITEM_POOL.find(x=>x.id===id),prepared:false,labelRemoved:false});
+const receipt=pool('receipt');assert.equal(sortingResult(receipt,'paper').ok,false,'Receipts are thermal paper, not paper');assert.equal(sortingResult(receipt,'general').ok,true);
+const cup=pool('papercup');assert.equal(sortingResult(cup,'carton').ok,false,'Paper cups are rinsed first');cup.prepared=true;assert.equal(sortingResult(cup,'paper').ok,false,'Coated paper cups are not paper');assert.equal(sortingResult(cup,'carton').ok,true);
+const printed=pool('pet2');printed.prepared=true;assert.equal(sortingResult(printed,'pet').ok,false,'Printed PET is not clear PET');assert.equal(sortingResult(printed,'plastic').ok,true);
+const spray=pool('spraycan');assert.match(sortingResult(spray,'can').reason,/가스/,'Spray cans need the gas removed with an adult');spray.labelRemoved=true;assert.equal(sortingResult(spray,'can').ok,true);
+const jar=pool('jar');jar.prepared=true;assert.match(sortingResult(jar,'glass').reason,/뚜껑/,'Glass jars lose their metal lid');jar.labelRemoved=true;assert.equal(sortingResult(jar,'glass').ok,true);
+assert.equal(sortingResult(pool('bones'),'food').ok,false,'Bones are not food waste');
+const parcel=pool('parcel');assert.equal(sortingResult(parcel,'paper').ok,false,'Tape and waybill come off first');parcel.labelRemoved=true;assert.equal(sortingResult(parcel,'paper').ok,true);
+for(const it of ITEM_POOL)for(const part of it.peel?.parts||[])assert.ok(sortingResult({...part,prepared:true},part.bin).ok,'Separated parts have a valid bin');
+console.log('Sorting (including tricky items), doorway and collision assertions passed.');

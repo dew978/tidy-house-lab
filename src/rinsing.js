@@ -46,12 +46,12 @@ export function makeRinseAnimation(scene){
  function clear(){root.visible=false;vessel.clear();contents.hide();water.hide();item=null;visual=null;liquidParts=[];caps=[];}
  return {get active(){return !!item;},get progress(){return Math.min(1,elapsed/RINSE_DURATION);},get phase(){return elapsed<2.65?'내용물 비우기':'물로 헹구기';},start(next,spot='kitchen'){
   clear();item=next;elapsed=0;const at=RINSE_SPOTS[spot]||RINSE_SPOTS.kitchen;base.set(...at.vessel);impact.set(...at.impact);tap.set(...at.tap);visual=cloneVessel(next.object);visual.position.set(0,0,0);visual.rotation.set(0,0,0);visual.visible=true;
-  visual.traverse(o=>{o.userData={...o.userData,noBatch:true};if(o.userData.part==='contents')liquidParts.push({mesh:o,y:o.position.y,scale:o.scale.y});if(o.userData.part==='cap'||o.userData.part==='pump'){caps.push(o);o.visible=false;}if(o.material?.polygonOffset)o.visible=false;});
+  visual.traverse(o=>{o.userData={...o.userData,noBatch:true};if(o.userData.part==='contents')liquidParts.push({mesh:o,y:o.position.y,scale:o.scale.y});if(['cap','pump','lid'].includes(o.userData.part)){caps.push(o);o.visible=false;}if(o.material?.polygonOffset)o.visible=false;});
   // Rotate around the middle of the container, keeping the mouth attached.
-  const height=next.bin==='pet'?.35:next.bin==='carton'?.32:next.bin==='can'?.21:.27;
+  const gable=next.bin==='carton'&&!next.rinse,height=next.rinse?.height??(next.bin==='pet'?.35:next.bin==='carton'?.32:next.bin==='can'?.21:.27);
   pivot.set(0,height*.45,0);visual.position.copy(pivot).negate();vessel.add(visual);
-  mouth.set(next.bin==='carton'?-.05:0,height,next.bin==='carton'?.04:0).sub(pivot);
-  contents.material.color.set(next.bin==='carton'?'#fff8de':next.bin==='pet'?'#c78c2e':next.bin==='can'?'#b27736':'#b7d9bf');root.visible=true;
+  mouth.set(gable?-.05:0,height,gable?.04:0).sub(pivot);
+  contents.material.color.set(next.rinse?.color??(next.bin==='carton'?'#fff8de':next.bin==='pet'?'#c78c2e':next.bin==='can'?'#b27736':'#b7d9bf'));root.visible=true;
  },update(dt){
   if(!item)return null;elapsed+=dt;const phase=rinsePhase(elapsed);
   vessel.position.copy(base);vessel.rotation.set(0,.15,-phase.tilt*2.05);vessel.updateMatrixWorld(true);outlet.copy(mouth).applyMatrix4(vessel.matrixWorld);

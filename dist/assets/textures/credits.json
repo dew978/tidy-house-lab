@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "downloadedAt": "2026-09-28T22:13:57.6248166Z",
+  "totalTextureBytes": 4449975,
+  "resolution": [
+    1024,
+    1024
+  ],
+  "mapConvention": {
+    "uv": "RepeatWrapping for both axes; all maps of a material must share repeat and rotation",
+    "color": "sRGB",
+    "roughness": "linear / NoColorSpace; non-metallic materials",
+    "normal": "OpenGL tangent-space, linear / NoColorSpace"
+  },
+  "verification": {
+    "polyHavenMaps": "Downloaded MD5 matched official API manifest for all six files",
+    "ambientCgMaps": "Extracted expected Color, NormalGL, and Roughness files from official 1K-JPG archive",
+    "visual": "Inspected all three base-color images",
+    "dimensions": "All nine JPG files decoded as 1024 x 1024"
+  },
+  "creditText": "Textures from Poly Haven and ambientCG, licensed CC0 1.0.",
+  "apiServiceNote": "These are bundled local assets. No live asset API is needed in the game. Source/API URLs are provenance only.",
+  "assets": [
+    {
+      "maps": [
+        {
+          "relativePath": "oak/color.jpg",
+          "role": "color",
+          "asset": "oak_wood_planks",
+          "bytes": 696814,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_wood_planks/oak_wood_planks_diff_1k.jpg",
+          "md5": "e9e25ac7abcc482f73214fda23e2de25"
+        },
+        {
+          "relativePath": "oak/normal-gl.jpg",
+          "role": "normal-gl",
+          "asset": "oak_wood_planks",
+          "bytes": 392213,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_wood_planks/oak_wood_planks_nor_gl_1k.jpg",
+          "md5": "6a71c23551887b77b29623bb871aefbf"
+        },
+        {
+          "relativePath": "oak/roughness.jpg",
+          "role": "roughness",
+          "asset": "oak_wood_planks",
+          "bytes": 845590,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_wood_planks/oak_wood_planks_rough_1k.jpg",
+          "md5": "3609ef0a3155ae90b69395431bf8cec1"
+        }
+      ],
+      "authors": [
+        "Dimitrios Savva"
+      ],
+      "cc0Url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "Oak Wood Planks",
+      "notes": "Warm varnished oak. Preserve the long grain direction. Use RepeatWrapping; repeat count is surface size in meters divided by 1.2.",
+      "suggestedNormalScale": 0.45,
+      "license": "CC0-1.0",
+      "sourceRepeatMeters": [
+        1.2,
+        1.2
+      ],
+      "suggestedRepeatMeters": [
+        1.2,
+        1.2
+      ],
+      "provider": "Poly Haven",
+      "folder": "oak",
+      "licenseUrl": "https://polyhaven.com/license",
+      "id": "oak_wood_planks",
+      "sourceUrl": "https://polyhaven.com/a/oak_wood_planks",
+      "manifestUrl": "https://api.polyhaven.com/files/oak_wood_planks"
+    },
+    {
+      "maps": [
+        {
+          "relativePath": "plaster/color.jpg",
+          "role": "color",
+          "asset": "white_plaster_02",
+          "bytes": 527219,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+          "md5": "7b10c2686bcfd76d1f309a20fd06b57e"
+        },
+        {
+          "relativePath": "plaster/normal-gl.jpg",
+          "role": "normal-gl",
+          "asset": "white_plaster_02",
+          "bytes": 652310,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_nor_gl_1k.jpg",
+          "md5": "55fc03203ebf1dc703a380fde93ff502"
+        },
+        {
+          "relativePath": "plaster/roughness.jpg",
+          "role": "roughness",
+          "asset": "white_plaster_02",
+          "bytes": 295900,
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_rough_1k.jpg",
+          "md5": "8b28f263360b8c4ddbdc4f7c650c4eeb"
+        }
+      ],
+      "authors": [
+        "Rob Tuytel"
+      ],
+      "cc0Url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "White Plaster 02",
+      "notes": "Subtle plaster scan with a warm gray base color. For freshly painted walls, use the normal and roughness maps with a solid off-white material, or blend the color map toward the paint color; simple multiplication cannot lighten it.",
+      "suggestedNormalScale": 0.15,
+      "license": "CC0-1.0",
+      "sourceRepeatMeters": [
+        1,
+        1
+      ],
+      "suggestedRepeatMeters": [
+        1,
+        1
+      ],
+      "provider": "Poly Haven",
+      "folder": "plaster",
+      "licenseUrl": "https://polyhaven.com/license",
+      "id": "white_plaster_02",
+      "sourceUrl": "https://polyhaven.com/a/white_plaster_02",
+      "manifestUrl": "https://api.polyhaven.com/files/white_plaster_02"
+    },
+    {
+      "manifestUrl": "https://ambientcg.com/api/v2/full_json?id=Tiles107&include=downloadData,displayData,dimensionsData",
+      "cc0Url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceRepeatMeters": [
+        1,
+        1
+      ],
+      "notes": "Clean white square ceramic-style tiles. Multiply the white color map by a light gray material color for the requested gray finish. Source has eight tiles per axis; a 2.4m repeat gives 30cm floor tiles, 3.2m gives 40cm. Native source scale is 1m, 12.5cm tiles.",
+      "id": "Tiles107",
+      "licenseUrl": "https://docs.ambientcg.com/license/",
+      "suggestedNormalScale": 0.35,
+      "name": "Tiles 107",
+      "license": "CC0-1.0",
+      "authors": [
+        "ambientCG"
+      ],
+      "suggestedRepeatMeters": [
+        2.4,
+        2.4
+      ],
+      "suggestedMaterialColor": "#ced4d5",
+      "creationMethod": "PBRProcedural",
+      "maps": [
+        {
+          "archiveEntry": "Tiles107_1K-JPG_Color.jpg",
+          "bytes": 271201,
+          "md5": "277fcfdacdb4821db96ca673d6d0149d",
+          "role": "color",
+          "asset": "Tiles107",
+          "relativePath": "tile/color.jpg",
+          "sourceUrl": "https://ambientcg.com/get?file=Tiles107_1K-JPG.zip"
+        },
+        {
+          "archiveEntry": "Tiles107_1K-JPG_NormalGL.jpg",
+          "bytes": 560108,
+          "md5": "6fc7c4542eb72024e4e1c5d1c161a8c1",
+          "role": "normal-gl",
+          "asset": "Tiles107",
+          "relativePath": "tile/normal-gl.jpg",
+          "sourceUrl": "https://ambientcg.com/get?file=Tiles107_1K-JPG.zip"
+        },
+        {
+          "archiveEntry": "Tiles107_1K-JPG_Roughness.jpg",
+          "bytes": 208620,
+          "md5": "a9741a2952288f75e6511ee6eda6508d",
+          "role": "roughness",
+          "asset": "Tiles107",
+          "relativePath": "tile/roughness.jpg",
+          "sourceUrl": "https://ambientcg.com/get?file=Tiles107_1K-JPG.zip"
+        }
+      ],
+      "provider": "ambientCG",
+      "sourceUrl": "https://ambientcg.com/view?id=Tiles107",
+      "folder": "tile"
+    }
+  ],
+  "environment": {
+    "id": "suburban_garden",
+    "name": "Suburban Garden",
+    "type": "hdri",
+    "provider": "Poly Haven",
+    "authors": {
+      "processing": "Jarod Guest",
+      "photography": "Dimitrios Savva"
+    },
+    "sourceUrl": "https://polyhaven.com/a/suburban_garden",
+    "manifestUrl": "https://api.polyhaven.com/files/suburban_garden",
+    "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/suburban_garden_1k.hdr",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "cc0Url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "relativePath": "environment.hdr",
+    "bytes": 1622533,
+    "md5": "d33bb37eed0e43fff8b63ea1d362b75f",
+    "resolution": [
+      1024,
+      512
+    ],
+    "projection": "equirectangular",
+    "format": "Radiance RGBE HDR",
+    "colorSpace": "linear",
+    "timeOfDay": "midday",
+    "weather": "clear",
+    "lightType": "natural",
+    "scene": "Outdoor residential garden with blue sky, grass, trees and shrubs",
+    "notes": "Use the HDR equirectangular map for window background and preprocess with PMREM for image-based lighting. Retains the original high-dynamic-range sunlight. 1K is compact and best used as a gently blurred distant backdrop.",
+    "verification": "File MD5 matched official Poly Haven API manifest; Radiance header and dimensions verified."
+  },
+  "totalAssetBytes": 6072508,
+  "tabletVariants": {
+    "directory": "lite/",
+    "materialResolution": [
+      512,
+      512
+    ],
+    "files": 10,
+    "totalBytes": 319516,
+    "derivation": "Downsampled CC0 material maps and a 512-pixel-wide JPEG derived from the bundled CC0 environment HDR. Original source attribution and licenses apply."
+  }
+}

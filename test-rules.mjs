@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {sortingResult,canStand,movePlayer} from './src/rules.js';
+const pet={id:'pet1',bin:'pet',prep:true,peel:true,prepared:false,labelRemoved:false};
+assert.equal(sortingResult(pet,'pet').ok,false,'Unrinsed containers must be rejected');
+pet.prepared=true;assert.equal(sortingResult(pet,'pet').ok,false,'Labels must be separated');
+pet.labelRemoved=true;assert.equal(sortingResult(pet,'plastic').ok,false,'Clear beverage PET is a separate stream');
+assert.equal(sortingResult(pet,'pet').ok,true);
+assert.equal(sortingResult({storage:'books'},'paper').ok,false,'Reusable books belong on the shelf');
+assert.equal(sortingResult({bin:'general'},'food').ok,false,'Eggshells are general waste');
+assert.equal(sortingResult({bin:'battery'},'general').ok,false,'Batteries need their own collection');
+assert.equal(sortingResult({bin:'carton',prep:true,prepared:true},'paper').ok,false,'Cartons differ from paper');
+const walls=[{minX:1.42,maxX:1.58,minZ:-5,maxZ:-2.6},{minX:1.42,maxX:1.58,minZ:-.6,maxZ:2}];
+assert.equal(canStand(1.5,-3,walls),false);assert.equal(canStand(1.5,-1.6,walls),true);
+let p={x:0,z:-3};movePlayer(p,5,0,walls);assert.ok(p.x<1.2,'Large steps must not tunnel through a wall');
+p={x:0,z:-1.6};movePlayer(p,3,0,walls);assert.ok(p.x>2.9,'The kitchen doorway must be passable');
+p={x:0,z:0};movePlayer(p,0,100,[]);assert.ok(p.z<=6.71,'Exterior bounds must hold');
+console.log('12 meaningful sorting, doorway and collision assertions passed.');

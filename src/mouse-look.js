@@ -1,6 +1,7 @@
 export const MOUSE_GAIN=1.3;
-export const LOCKED_MOUSE_SENSITIVITY=.0022*MOUSE_GAIN;
-export const FREE_MOUSE_SENSITIVITY=.003*MOUSE_GAIN;
+// Radians per mouse pixel so the scene at the screen centre moves MOUSE_GAIN
+// pixels for every pixel the mouse moves (100 → 130), whatever the resolution.
+export function mouseSensitivity(viewHeight,fovDegrees){const focal=Math.max(1,viewHeight)/2/Math.tan(fovDegrees*Math.PI/360);return Math.atan(100*MOUSE_GAIN/focal)/100;}
 
 // Pointer lock is unavailable in some embedded browsers. A narrow strip inside
 // either edge lets the player keep turning without pressing or dragging.

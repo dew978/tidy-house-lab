@@ -6,7 +6,7 @@ import { DirtPatch } from './cleaning.js';
 import { CONTRACTS,applyContract } from './contracts.js';
 import { renderBudget,batchScenery } from './performance.js';
 import { drawHouseMap } from './floorplan.js';
-import { MOUSE_GAIN,LOCKED_MOUSE_SENSITIVITY,FREE_MOUSE_SENSITIVITY,edgeTurnSpeed } from './mouse-look.js';
+import { MOUSE_GAIN,mouseSensitivity,edgeTurnSpeed } from './mouse-look.js';
 import { sortingResult, movePlayer, PREPARATION } from './rules.js';
 import { makeRinseAnimation, RINSE_SPOTS } from './rinsing.js';
 import { makeSprayEffect } from './spray.js';
@@ -150,7 +150,7 @@ $('contract-label').textContent=contract.name;$('start-contract').textContent=co
 $('export-button').onclick=()=>{const text=`우리집 새로고침 · 나의 돌봄 기록\n\n2022 개정 실과 [6실02-10]\n완료한 공간: 나의 방, 주방, 욕실\n정리·분리배출: ${world.items.length}개\n닦은 구역: ${patches.length}곳\n\n익힌 방법\n- 환기하고 위험한 물건 확인하기\n- 물건을 제자리에 정리하기\n- 높은 곳부터, 마른 먼지를 먼저 제거하기\n- 얼룩을 불리고 알맞은 도구로 닦기\n- 비우고, 헹구고, 다른 재질을 분리해 종류별 배출하기\n\n집에서 실천할 한 가지\n${$('reflection').value||'아직 작성하지 않았어요.'}\n\n실제 배출 품목과 방법은 우리 지역 안내를 확인하세요.\n`;const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='우리집-3D-돌봄-기록.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 document.addEventListener('pointerlockchange',()=>{const wasLocked=pointerLocked;pointerLocked=document.pointerLockElement===canvas;lockPending=false;mouseOrigin=null;showEdgeTurn(0);if(pointerLocked&&(!running||touchMode)){document.exitPointerLock?.();return;}if(wasLocked&&!pointerLocked&&running)pause();});
 document.addEventListener('pointerlockerror',()=>{pointerLocked=false;lockPending=false;});
-document.addEventListener('mousemove',e=>{if(!running||touchMode||e.sourceCapabilities?.firesTouchEvents)return;if(pointerLocked){yaw-=e.movementX*LOCKED_MOUSE_SENSITIVITY;pitch-=e.movementY*LOCKED_MOUSE_SENSITIVITY;}else if(e.target===canvas){if(mouseOrigin){yaw-=(e.clientX-mouseOrigin.x)*FREE_MOUSE_SENSITIVITY;pitch-=(e.clientY-mouseOrigin.y)*FREE_MOUSE_SENSITIVITY;}mouseOrigin={x:e.clientX,y:e.clientY};}else{mouseOrigin=null;showEdgeTurn(0);}pitch=Math.max(-1.4,Math.min(1.35,pitch));});
+document.addEventListener('mousemove',e=>{if(!running||touchMode||e.sourceCapabilities?.firesTouchEvents)return;const look=mouseSensitivity(innerHeight,camera.fov);if(pointerLocked){yaw-=e.movementX*look;pitch-=e.movementY*look;}else if(e.target===canvas){if(mouseOrigin){yaw-=(e.clientX-mouseOrigin.x)*look;pitch-=(e.clientY-mouseOrigin.y)*look;}mouseOrigin={x:e.clientX,y:e.clientY};}else{mouseOrigin=null;showEdgeTurn(0);}pitch=Math.max(-1.4,Math.min(1.35,pitch));});
 canvas.addEventListener('pointerleave',()=>{mouseOrigin=null;showEdgeTurn(0);});
 canvas.addEventListener('pointerdown',e=>{if(!running)return;if(e.pointerType==='touch'||e.pointerType==='pen'||touchMode){e.preventDefault();if(touchLook.id!==null)return;if(state.inputMode==='auto'){touchMode=true;document.body.classList.add('touch');}touchLook.id=e.pointerId;touchLook.x=e.clientX;touchLook.y=e.clientY;canvas.setPointerCapture(e.pointerId);}else if(e.button===0){canvas.focus({preventScroll:true});requestLock();if(resumeCleaning())cleaning=true;}});
 canvas.addEventListener('pointermove',e=>{if(e.pointerId!==touchLook.id||!running)return;yaw-=(e.clientX-touchLook.x)*.004;pitch=Math.max(-1.4,Math.min(1.35,pitch-(e.clientY-touchLook.y)*.004));touchLook.x=e.clientX;touchLook.y=e.clientY;});
